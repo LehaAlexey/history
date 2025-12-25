@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package history;
+
+option go_package = "github.com/LehaAlexey/History/internal/pb/history;history";
+
+message HistoryPoint {
+  string product_id = 1;
+  int64 price = 2;
+  string currency = 3;
+  int64 parsed_at = 4;
+  string source_url = 5;
+  string event_id = 6;
+}
+
+message GetHistoryRequest {
+  string product_id = 1;
+  int64 from_unix = 2;
+  int64 to_unix = 3;
+  int32 limit = 4;
+}
+
+message GetHistoryResponse {
+  repeated HistoryPoint points = 1;
+}
+
+service HistoryService {
+  rpc GetHistory(GetHistoryRequest) returns (GetHistoryResponse);
+}
